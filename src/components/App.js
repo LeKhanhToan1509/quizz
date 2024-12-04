@@ -13,12 +13,10 @@ import Footer from "./Footer";
 import Timer from "./Timer";
 import "../index.css";
 
-const SECS_PER_QUESTION = 5;
+const SECS_PER_QUESTION = 75;
 
-// We need to define the intialState in order to use useReduce Hook.
 const initialState = {
   questions: [],
-  // 'loading', 'error', 'ready', 'active', 'finished'
   status: "loading",
   index: 0,
   answer: null,
@@ -100,13 +98,17 @@ export default function App() {
   );
 
   useEffect(function () {
-    fetch("https://vinayak9669.github.io/React_quiz_api/questions.json")
+    const apiUrl = process.env.REACT_APP_BE_DOMAIN;
+    console.log(apiUrl);
+    fetch(`${apiUrl}/random-questions`)
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) =>{
+        console.log(data);
         dispatch({
           type: "dataReceived",
           payload: data["questions"],
         })
+      }
       )
       .catch((err) => dispatch({ type: "dataFailed" }));
   }, []);
