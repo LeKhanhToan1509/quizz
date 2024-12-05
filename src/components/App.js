@@ -13,7 +13,7 @@ import Footer from "./Footer";
 import Timer from "./Timer";
 import "../index.css";
 
-const SECS_PER_QUESTION = 75;
+const SECS_PER_QUESTION = 60;
 
 const initialState = {
   questions: [],
@@ -97,21 +97,23 @@ export default function App() {
     0
   );
 
-  useEffect(function () {
-    const apiUrl = process.env.REACT_APP_BE_DOMAIN;
-    console.log(apiUrl);
-    fetch(`${apiUrl}/random-questions`)
+  useEffect(() => {
+    
+    fetch(`https://be-quiz.vercel.app/random-questions`)
       .then((res) => res.json())
-      .then((data) =>{
+      .then((data) => {
         console.log(data);
         dispatch({
-          type: "dataReceived",
-          payload: data["questions"],
-        })
-      }
-      )
-      .catch((err) => dispatch({ type: "dataFailed" }));
+          type: 'dataReceived',
+          payload: data['questions'],
+        });
+      })
+      .catch((err) => {
+        console.error('Error fetching data:', err);
+        dispatch({ type: 'dataFailed' });
+      });
   }, []);
+  
 
   return (
     <div className="wrapper">
