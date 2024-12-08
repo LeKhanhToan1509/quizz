@@ -99,7 +99,7 @@ export default function App() {
 
   useEffect(() => {
     
-    fetch(`https://be-quiz.vercel.app/random-questions`)
+    fetch(`https://be-quiz-rcmjvubzb-lekhanhtoan1509s-projects.vercel.app/random-questions`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
